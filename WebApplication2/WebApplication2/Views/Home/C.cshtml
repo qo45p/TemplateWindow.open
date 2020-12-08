@@ -1,0 +1,22 @@
+﻿
+@{
+    ViewBag.Title = "C";
+}
+
+<h2>C</h2>
+
+<form id="form1" runat="server">
+
+    <input type="button" value="關閉子視窗" id="btnSub" />
+    <!--引用jQuery-->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript">
+            $(function () {
+                $("#btnSub").on("click", function () {
+                    //操作父視窗的DOM元素
+                    window.opener.document.getElementById("divParent").innerHTML = "兒子給的值";
+                    window.close();//關閉子視窗
+                });
+            });
+    </script>
+</form>

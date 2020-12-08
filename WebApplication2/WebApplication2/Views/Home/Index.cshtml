@@ -1,0 +1,83 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>ASP.NET</h1>
+    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
+    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>Getting started</h2>
+        <p>
+            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
+            enables a clean separation of concerns and gives you full control over markup
+            for enjoyable, agile development.
+        </p>
+        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Get more libraries</h2>
+        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
+        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Web Hosting</h2>
+        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
+        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+    </div>
+
+
+
+    <form id="form1" runat="server">
+        <input type="button" value="另開視窗" id="btnParent" />
+        <!--父視窗的DOM元素-->
+        <div id="divParent">divParent&ensp; </div>
+        <div id="divParent2">divParent2&ensp; </div>
+        <div id="divParent3">Try Try</div>
+        <h3 id="h3">H3</h3>
+
+
+        <!--引用jQuery-->
+        <!--[if !IE]> -->
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <!-- <![endif]-->
+        <!--[if IE]-->
+        <script src="https://code.jquery.com/jquery-1.11.0.min.js"
+                integrity="sha256-spTpc4lvj4dOkKjrGokIrHkJgNA0xMS98Pw9N7ir9oI="
+                crossorigin="anonymous"></script>
+        <!--[endif]-->
+
+        <script type="text/javascript">
+            function B() {
+                var x = 1;
+                window.alert(x + "大好");
+                document.getElementById("h3").innerHTML = x + "大好";
+            }
+
+            $(function () {
+                $("#btnParent").on("click", function () {
+
+                    var child = window.open('@Url.Action("B","Home")?funcName=windowOpenReturnFunc', "_blank", "width=500px,height=500px");
+                    child.addEventListener('unload', AfterClose, true);
+
+                });
+            });
+
+            function AfterClose() {
+                alert("子視窗關閉囉");
+            }
+
+
+            //注意父視窗要宣告成global function
+            function windowOpenReturnFunc(ret) {
+                //ret為子視窗回傳的值
+                //alert("子視窗回傳的值:" + ret);
+                document.getElementById("divParent2").innerHTML = ret;
+
+            }
+        </script>
+    </form>
+</div>

@@ -1,0 +1,63 @@
+https://gist.github.com/qo45p/924e9d036d1bff2ea63e5c223109a7c5
+
+# JavaScript : await
+![](https://i.imgur.com/Mjsh3k4.jpg)
+
+
+## Introduction
+- 建構於promise之上
+- ES7出現
+- Promise 中完成會透過 then 來回傳，在 await 中他則是會等待這段函式完成後在往下繼續執行，這是一個卡住的概念。
+- 如果只用await，遇到錯誤就會造成停止讓後方程式碼不執行，這樣的話 await 還會很危險的。但其實可以從許多文件發現 await/async 都是同時使用的，await 的錯誤會讓 async 拋出錯誤，而不會造成終止。
+
+```javascript
+function logWord(word) {
+    return new Promise(function (resolve, reject) {
+        setTimeout(function() {
+            console.log(word)
+            resolve()
+        }, Math.floor(Math.random() * 100) + 1)
+    })
+}
+
+    // function logAll() {
+    //     logWord('A')
+    //     .then(function() {
+    //         return logWord('B')
+    //     })
+    //     .then(function() {
+    //         return logWord('C')
+    //     })
+    // }
+
+    async function logAll() {
+        await logWord('A')
+        await logWord('B')
+        await logWord('C')
+    }
+
+    logAll()
+```
+
+```javascript=
+//練習RESTful API 
+//https://jsonplaceholder.typicode.com/
+async function GetData(){
+    let res = await fetch('https://jsonplaceholder.typicode.com/todos/1')
+    let data = await res.json()
+    console.log(data)
+}
+```
+
+```javascript=
+//偵錯 加上try&catch捕捉錯誤資訊
+async function GetData(){
+    try{
+        let res = await fetch('https://jsonplaceholder.typicode.com/todos/1')
+        let data = await res.json()
+        console.log(data)
+    } catch(e) {
+        console.log('error',e)
+    }   
+}
+```
